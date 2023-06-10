@@ -1,0 +1,22 @@
+{
+  "name": "NASA Project",
+  "version": "1.0.0",
+  "description": "In this project we gonna travel to the space",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set PORT=5000&& node src/server.js",
+    "watch": "set PORT=5000&& nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^5.4.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

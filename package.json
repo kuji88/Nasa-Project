@@ -1,0 +1,16 @@
+{
+  "name": "nasa-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run watch --prefix server",
+    "clients": "npm start --prefix clients",
+    "watch": "npm run clients&npm run server ",
+    "deploy": "npm run build --prefix clients && npm run server ",
+    "test": ""
+  },
+  "keywords": [],
+  "author": "Kuji",
+  "license": "ISC"
+}
