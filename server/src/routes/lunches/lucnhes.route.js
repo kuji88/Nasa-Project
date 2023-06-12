@@ -1,9 +1,12 @@
 const express = require('express')
-const {getAlllaunches} = require('./lunches.controller')
+const {getAlllaunches, postAllLaunches,deleteLaunch} = require('./lunches.controller')
 
 const lunchesRoute = express.Router()
 
-lunchesRoute.get('/launches', getAlllaunches)
+lunchesRoute.get('/', getAlllaunches)
+lunchesRoute.post('/', postAllLaunches)
+lunchesRoute.delete('/:id', deleteLaunch)
+
 
 module.exports = {
     lunchesRoute

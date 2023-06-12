@@ -6,8 +6,8 @@ const launch = {
     "flightNumber": 100,
     "mission": "Kleper mission",
     "rocket": "explorer the moon",
-    "launchDate": new Date("2030"),
-    "destination": "kleper 422-2",
+    "launchDate": new Date(),
+    "target": "kleper 422-2",
     "customer": [
         "ZTM",
         "NASA"
@@ -27,7 +27,22 @@ const addNewLaunch = (launch)=>{
     }))
 }
 
+const existLaunch= (launchId)=>{
+    return launches.has(launchId);
+}
+
+const abortedLaunch=(launchId)=>{
+    const aborted = launches.get(launchId)
+    aborted.upcoming =false
+    aborted.success =false
+    return aborted
+}
+
+
+
 module.exports= {
     launches,
     addNewLaunch,
+    existLaunch,
+    abortedLaunch,
 }

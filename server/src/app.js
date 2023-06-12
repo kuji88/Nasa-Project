@@ -10,8 +10,8 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(express.static(path.join(__dirname,"..","public")))
-app.use(planetsRoute)
-app.use(lunchesRoute)
+app.use('/Planets',planetsRoute)
+app.use('/launches',lunchesRoute)
 app.get('/*',(req,res)=>{
     res.sendFile(path.join(__dirname,"..","public","index.html"))
 })
