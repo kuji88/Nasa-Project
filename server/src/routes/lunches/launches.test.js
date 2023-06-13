@@ -27,6 +27,13 @@ describe("Test POST /launches",()=>{
         "target":"443-moon"
     }
 
+    const dataWithInvalidDate ={
+        "mission":"Travel to moon",
+        "rocket": "KUji",
+        "launchDate":"OOPS!",
+        "target":"443-moon"
+    }
+
     test("should post it",async ()=>{
         const response= await request(app)
         .post("/launches")
@@ -43,6 +50,26 @@ describe("Test POST /launches",()=>{
         
     })
 
-    test("should catch the missing", ()=>{})
-    test("should get the Date correctly", ()=>{})
+    test("should catch the missing",async ()=>{
+        const response= await request(app)
+        .post("/launches")
+        .send(datawithoutDate)
+        .expect("Content-Type",/json/)
+        .expect(400)
+
+        expect(response.body).toStrictEqual({
+            "error":"Something missing"
+        })
+    })
+    test("should get the Date correctly", async ()=>{
+        const response= await request(app)
+        .post("/launches")
+        .send(dataWithInvalidDate)
+        .expect("Content-Type",/json/)
+        .expect(400)
+
+        expect(response.body).toStrictEqual({
+            "error":"launch Date is worng"
+        })
+    })
 })
