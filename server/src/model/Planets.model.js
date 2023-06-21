@@ -1,9 +1,8 @@
 const { parse } = require('csv-parse');
 const fs = require('fs');
 const path= require('path')
+const planets = require('./Planets.schema')
 
-
-const habitablePlanets = [];
 
 const loadPlanets=()=>{
     return new Promise((resolve,reject)=>{
@@ -12,17 +11,18 @@ const loadPlanets=()=>{
           comment: '#',
           columns: true,
         }))
-        .on('data', (data) => {
-          if (isHabitablePlanet(data)) {
-            habitablePlanets.push(data);
+        .on('data', async(data) => {
+          if (isHabitablePlanet (data)) {
+           mongoPlanets(data)
           }
         })
         .on('error', (err) => {
           console.log(err);
           reject(err)
         })
-        .on('end', () => {
-          console.log(`${habitablePlanets.length} habitable planets found!`);
+        .on('end', async(data) => {
+          const nonee = (await getPlantes()).length
+          console.log(`${nonee} habitable planets found!`);
           resolve();
         });
     })
@@ -36,4 +36,25 @@ function isHabitablePlanet(planet) {
 
 
 
-module.exports= {Planets: habitablePlanets, loadPlanets}
+
+async function getPlantes(){
+  return await planets.find({},{
+    '__v': false,
+    '_id':false
+  })
+}
+
+async function mongoPlanets(data){
+  await planets.updateOne({
+    keplerName:data.kepler_name
+  },
+  {
+    keplerName:data.kepler_name
+  },
+  {
+    upsert: true
+  })
+}
+
+
+module.exports= {getPlantes, loadPlanets}

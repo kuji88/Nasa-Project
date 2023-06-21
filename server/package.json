@@ -4,7 +4,7 @@
   "description": "In this project we gonna travel to the space",
   "main": "src/server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test-watch": "jest watch",
     "start": "set PORT=5000&& node src/server.js",
     "watch": "set PORT=5000&& nodemon src/server.js"
@@ -12,6 +12,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest":{
+    "testEnvironment": "node"
+}
+,
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parse": "^5.4.0",

@@ -1,4 +1,5 @@
-const launches = new Map();
+const launchesData = require('./launches.schema')
+const planet = require('./Planets.schema')
 
 let latestFlightNumber=100;
 
@@ -7,7 +8,7 @@ const launch = {
     "mission": "Kleper mission",
     "rocket": "explorer the moon",
     "launchDate": new Date(),
-    "target": "kleper 422-2",
+    "target": "Kepler-1652 b",
     "customer": [
         "ZTM",
         "NASA"
@@ -16,33 +17,73 @@ const launch = {
     "success":"true"
 }
 
-launches.set(launch.flightNumber, launch )
-latestFlightNumber++;
-const addNewLaunch = (launch)=>{
-    launches.set(latestFlightNumber, Object.assign(launch,{
-        flightNumber: latestFlightNumber,
-        customer: ["ZTM", "NASA"],
-        success: true,
-        upcoming: true,
-    }))
+
+
+async function sortFlightNumber(){
+    const flightFilter = await launchesData.findOne().sort("-flightNumber")
+
+    if(!flightFilter){
+        return latestFlightNumber
+    }   
+
+    return flightFilter.flightNumber
 }
 
-const existLaunch= (launchId)=>{
-    return launches.has(launchId);
+
+async function saveLaunchesData(data){
+   const planets =  await planet.findOne({
+        keplerName: data.target
+    })
+
+    if(!planets){
+    throw new Error("Error handling")}
+
+    await launchesData.findOneAndUpdate({
+        flightNumber: data.flightNumber
+    },data,{ upsert:true })
 }
 
-const abortedLaunch=(launchId)=>{
-    const aborted = launches.get(launchId)
-    aborted.upcoming =false
-    aborted.success =false
-    return aborted
+const saveLaunch= async(launch)=>{
+    const getFlight = await sortFlightNumber() + 1;
+        
+        const newLaunch = Object.assign(launch,{
+            flightNumber: getFlight,
+            customer: ["ZTM", "NASA"],
+            success: true,
+            upcoming: true,
+        })
+       await saveLaunchesData(newLaunch)
+    
 }
 
+
+const existLaunch= async(launchId)=>{
+    return await launchesData.findOne({
+        flightNumber: launchId
+    })
+}
+
+const abortedLaunch= async(launchId)=>{
+     const aborted = await launchesData.updateOne({
+        flightNumber: launchId
+    },
+    {
+        success: false,
+        upcoming: false
+    })
+
+    return aborted.modifiedCount === 1;
+}
+
+
+async function getAllDlaunches(){
+    return await launchesData.find({},{ '_id':0, "__v":0})
+ }
 
 
 module.exports= {
-    launches,
-    addNewLaunch,
+    saveLaunch,
     existLaunch,
     abortedLaunch,
+    getAllDlaunches
 }
