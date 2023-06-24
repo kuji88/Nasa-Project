@@ -8,10 +8,10 @@ beforeAll(async()=>{
     await connectionsMongo()
 
 })
-    describe("Test GET /Lanuches",()=>{
+    describe("Test GET /v1/Lanuches",()=>{
         test('should be success', async () => { 
             const response = await request(app)
-            .get("/launches")
+            .get("/v1/launches")
             .expect(200)
             .expect('Content-Type',/json/)
             
@@ -19,7 +19,7 @@ beforeAll(async()=>{
     })
     
     
-    describe("Test POST /launches",()=>{
+    describe("Test POST /v1/launches",()=>{
     
         const dataWithDate ={
             "mission":"Travel to moon",
@@ -43,7 +43,7 @@ beforeAll(async()=>{
     
         test("should post it",async ()=>{
             const response= await request(app)
-            .post("/launches")
+            .post("/v1/launches")
             .send(dataWithDate)
             .expect("Content-Type",/json/)
             .expect(200)
@@ -59,7 +59,7 @@ beforeAll(async()=>{
     
         test("should catch the missing",async ()=>{
             const response= await request(app)
-            .post("/launches")
+            .post("/v1/launches")
             .send(datawithoutDate)
             .expect("Content-Type",/json/)
             .expect(400)
@@ -70,7 +70,7 @@ beforeAll(async()=>{
         })
         test("should get the Date correctly", async ()=>{
             const response= await request(app)
-            .post("/launches")
+            .post("/v1/launches")
             .send(dataWithInvalidDate)
             .expect("Content-Type",/json/)
             .expect(400)

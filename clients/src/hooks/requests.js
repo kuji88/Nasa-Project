@@ -1,4 +1,4 @@
-const Api_req = 'http://localhost:5000'
+const Api_req = 'http://localhost:5000/v1'
 
 async function httpGetPlanets() {
   const respone = await fetch(`${Api_req}/Planets `)

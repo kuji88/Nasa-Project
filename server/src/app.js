@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path')
-const {planetsRoute} =require('./routes/planets/planets.route')
-const {lunchesRoute} = require('./routes/lunches/lucnhes.route')
+const api = require('./routes/api')
 const cors = require('cors')
 
 const app = express();
@@ -10,8 +9,7 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(express.static(path.join(__dirname,"..","public")))
-app.use('/Planets',planetsRoute)
-app.use('/launches',lunchesRoute)
+app.use('/v1',api)
 app.get('/*',(req,res)=>{
     res.sendFile(path.join(__dirname,"..","public","index.html"))
 })
