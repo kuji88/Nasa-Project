@@ -19,5 +19,7 @@ jobs:
         with :
           node-version : ${{ matrix.node-version }}
       - run : npm install
+      - run : npm run in --prefix clients
       - run : npm run build --prefix clients
+      - run : npm run in --prefix server
       - run : npm test -prefix server
