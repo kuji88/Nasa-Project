@@ -16,4 +16,5 @@ jobs:
       - run : npm install --force
       - run : npm install react-scripts --force
       - run : npm install react-dom react --force
+      - run : npm install react-router-dom --force
       - run : npm run build --prefix clients
