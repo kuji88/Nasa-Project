@@ -1,9 +1,10 @@
 {
-  "name": "NASA Project",
+  "name": "nasa-project",
   "version": "1.0.0",
   "description": "In this project we gonna travel to the space",
   "main": "src/server.js",
   "scripts": {
+    "in": "npm install",
     "test": "jest --detectOpenHandles",
     "test-watch": "jest watch",
     "start": "set PORT=5000&& node src/server.js",
@@ -12,15 +13,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "jest":{
+  "jest": {
     "testEnvironment": "node"
-}
-,
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parse": "^5.4.0",
     "express": "^4.18.2",
-    "mongoose": "^7.3.0"
+    "mongoose": "^7.3.0",
+    "nasa-project": "file:"
   },
   "devDependencies": {
     "jest": "^29.5.0",

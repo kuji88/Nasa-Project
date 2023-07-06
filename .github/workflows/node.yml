@@ -21,4 +21,5 @@ jobs:
       - run : npm install
       - run : npm run in --prefix clients
       - run : npm run build --prefix clients
-      - run : npm test
+      - run : npm run in --prefix server
+      - run : npm test -prefix server
